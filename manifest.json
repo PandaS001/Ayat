@@ -1,0 +1,16 @@
+{
+    "name": "10 Причин Любить Тебя",
+    "short_name": "10 Причин",
+    "description": "Романтическая игра с загадками",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#fff5f5",
+    "theme_color": "#ffdfeb",
+    "icons": [
+        {
+            "src": "assets/images/favicon.ico",
+            "sizes": "64x64",
+            "type": "image/x-icon"
+        }
+    ]
+}

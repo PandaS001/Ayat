@@ -1,0 +1,535 @@
+/* Основные переменные */
+:root {
+    --primary-color: #d46a8e;
+    --secondary-color: #ffb6c1;
+    --text-color: #5a3e36;
+    --light-bg: #fff9fb;
+    --shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Playfair Display', serif;
+    background: linear-gradient(135deg, #fff5f5, #ffebf1, #ffe1e8, #ffdfeb);
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.6;
+}
+
+/* Декоративные элементы */
+.decor {
+    position: fixed;
+    font-size: 2rem;
+    opacity: 0.3;
+    z-index: -1;
+    animation: float 6s ease-in-out infinite;
+}
+
+.decor-top-left { top: 20px; left: 20px; animation-delay: 0s; }
+.decor-top-right { top: 20px; right: 20px; animation-delay: 1.5s; }
+.decor-bottom-left { bottom: 20px; left: 20px; animation-delay: 3s; }
+.decor-bottom-right { bottom: 20px; right: 20px; animation-delay: 4.5s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+/* Анимированные лепестки */
+.petals {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.petal {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    animation: falling linear infinite;
+    user-select: none;
+}
+
+@keyframes falling {
+    0% {
+        top: -10%;
+        transform: translateX(0) rotate(0deg);
+        opacity: 0;
+    }
+    10% { opacity: 0.6; }
+    90% { opacity: 0.6; }
+    100% {
+        top: 110%;
+        transform: translateX(100px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Заставка */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(255, 245, 245, 0.9), rgba(255, 223, 235, 0.9));
+    z-index: 1000;
+}
+
+.photo-frame {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    padding: 10px;
+    background: linear-gradient(45deg, #ffdfeb, #ffffff, #ffdfeb);
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.photo-frame img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+}
+
+.splash-text {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-align: center;
+    max-width: 80%;
+}
+
+/* Основная страница */
+.main-page {
+    display: none;
+    padding: 30px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.main-page h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: var(--primary-color);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.handwriting {
+    font-family: 'Cormorant Garamond', cursive;
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
+.heart {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/* Сетка уровней */
+.levels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.level-btn {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    border: 1px solid var(--secondary-color);
+    background: rgba(255, 255, 255, 0.8);
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.3s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    position: relative;
+}
+
+.level-btn:hover:not(.completed) {
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 8px 20px rgba(212, 106, 142, 0.3);
+    background: white;
+    border-color: var(--primary-color);
+}
+
+.level-btn.completed {
+    background: var(--primary-color);
+    color: white;
+    cursor: default;
+}
+
+/* Специальный стиль для последнего уровня */
+#level-10 {
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    color: white;
+    font-weight: bold;
+}
+
+#level-10::after {
+    content: "❤️";
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 1.5rem;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+}
+
+/* Модальные окна */
+.modal-overlay, .letter-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+}
+
+.modal, .letter-modal {
+    background: var(--light-bg);
+    border-radius: 15px;
+    padding: 25px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 1px solid var(--secondary-color);
+    position: relative;
+}
+
+.modal-header, .letter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-title {
+    color: var(--primary-color);
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.close-btn {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-color);
+    transition: transform 0.2s;
+}
+
+.close-btn:hover {
+    transform: scale(1.2);
+    color: var(--primary-color);
+}
+
+.modal-riddle {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.crossword-input {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.crossword-input input {
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    font-size: 1.2rem;
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    transition: all 0.2s;
+    font-family: 'Playfair Display', serif;
+}
+
+.crossword-input input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(212, 106, 142, 0.5);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background: #c55a7e;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 106, 142, 0.4);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+/* Окно письма */
+.letter-modal {
+    text-align: center;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.letter-image {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.letter-text {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.letter-signature {
+    margin-top: 20px;
+    font-style: italic;
+    text-align: right;
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+#signature-name {
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+/* Контроль музыки */
+.music-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    transition: all 0.3s;
+    user-select: none;
+}
+
+.music-control:hover {
+    transform: scale(1.1);
+    background: #ffebf1;
+}
+
+/* Холст для конфетти */
+#confetti-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+/* Адаптация под мобильные */
+@media (max-width: 600px) {
+    .levels-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .modal, .letter-modal {
+        padding: 15px;
+    }
+    
+    .main-page h1 {
+        font-size: 2rem;
+    }
+    
+    .photo-frame {
+        width: 180px;
+        height: 180px;
+    }
+    
+    .photo-frame img {
+        width: 160px;
+        height: 160px;
+    }
+    
+    .splash-text {
+        font-size: 1.2rem;
+    }
+}
+
+/* Анимации */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+/* Стили для контейнера кнопки сброса */
+.reset-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  padding: 0 20px;
+}
+
+/* Основные стили кнопки */
+.reset-btn {
+  background: rgba(255, 182, 193, 0.2);
+  color: var(--primary-color);
+  border: 2px solid var(--primary-color);
+  padding: 12px 25px;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.4s ease;
+  box-shadow: 0 4px 15px rgba(212, 106, 142, 0.1);
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Эффект при наведении */
+.reset-btn:hover {
+  background: rgba(212, 106, 142, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(212, 106, 142, 0.2);
+}
+
+/* Эффект при нажатии */
+.reset-btn:active {
+  transform: translateY(0);
+}
+
+/* Стили для иконки */
+.reset-icon {
+  font-size: 18px;
+  transition: all 0.5s ease;
+}
+
+/* Анимация иконки при наведении */
+.reset-btn:hover .reset-icon {
+  transform: rotate(180deg);
+}
+
+/* Стили для текста */
+.reset-text {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Декоративный элемент (лепесток) */
+.reset-btn::after {
+  content: "🌸";
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+
+/* Показываем лепесток при наведении */
+.reset-btn:hover::after {
+  right: 15px;
+  opacity: 1;
+}
+
+/* Стили для состояния после сброса */
+.reset-btn.reset-success {
+  background: rgba(76, 175, 80, 0.2);
+  border-color: #4caf50;
+  color: #4caf50;
+}
+
+.reset-btn.reset-success .reset-icon {
+  transform: none;
+}
+
+/* Адаптация для мобильных */
+@media (max-width: 600px) {
+  .reset-btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  
+  .reset-text {
+    display: none;
+  }
+  
+  .reset-btn::after {
+    display: none;
+  }
+  
+  .reset-btn .reset-icon {
+    font-size: 20px;
+  }
+}
